@@ -4,6 +4,31 @@
   
     
     <entry>
+      <title>初学RSA</title>
+      <link href="2021/020461303.html"/>
+      <url>2021/020461303.html</url>
+      
+        <content type="html"><![CDATA[<p>笔记写在word上太难看了：）<br>因为主要用来ctf解题，还为太深地了解<br>个人概括起RSA来说就是：每个人都有公钥e，可以根据公钥e加密信息，但只有持有私钥d的我才能对信息进行解密。</p><h3 id="1互质关系"><a href="#1互质关系" class="headerlink" title="1互质关系"></a>1<em>互质关系</em></h3><p>  两个正整数除1以外没有公因子<br>（所以不仅仅是两个质数构成互质关系）</p><h3 id="2基础解题"><a href="#2基础解题" class="headerlink" title="2基础解题"></a>2<em>基础解题</em></h3><p>①一般给出两个素数p,q(若给出的是n，可以去<a href="http://www.factordb.com/index.php">在线分解大整数</a> )  </p><p>②计算公共模数 n<br> n = p * q  </p><p>③欧拉函数φ(n)<br>φ(n) = （p-1）*（q-1） </p><p>④公钥e<br>1 &lt; e &lt; φ(n)  </p><p>⑤私钥d<br>(d * e) mod φ(n) = 1<br>可用RSA-Tool2 by tE工具根据p,q,e解出(一般e要进行<a href="https://tool.oschina.net/hexconvert">10进制到16进制的转化</a>)  </p><p>⑥加密：密文c<br>c = (m^e) mod n  </p><p>⑦解密：明文m<br>m = (c^d) mod n  </p><p> 若题目说了格式为flag{}则直接上交<br>若未说，则转换成字符串的脚本如下：<br>import gmpy2<br>import binascii<br>e =<br>p =<br>q =<br>c =<br>n = p<em>q<br>phi = (p-1)</em>(q-1)<br>d = gmpy2.invert(e,phi)<br>m = gmpy2.powmod(c,d,n)<br>print(binascii.unhexlify(hex(m)[2:]))  </p><h3 id="2进阶解题"><a href="#2进阶解题" class="headerlink" title="2进阶解题"></a>2<em>进阶解题</em></h3><p>①私钥d<br>d = gmpy2.invert(e,phi)  </p><p>②（未）给出dp，dq<br>dp = d mod (p-1)<br>dq = d mod (q-1)  </p><p>③计算mp,mq<br>mp = (c^dp) mod p<br>mq = (c^dq) mod q  </p><p>④I<br>I = gmpy2.invert(q,p)  </p><p>⑤明文m<br>m = (((mp-mq)*I)%p)q + mq</p>]]></content>
+      
+      
+      <categories>
+          
+          <category> Markdown </category>
+          
+      </categories>
+      
+      
+        <tags>
+            
+            <tag> RSA </tag>
+            
+        </tags>
+      
+    </entry>
+    
+    
+    
+    <entry>
       <title>python学习杂谈</title>
       <link href="2021/020364441.html"/>
       <url>2021/020364441.html</url>
