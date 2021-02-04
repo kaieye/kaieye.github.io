@@ -485,7 +485,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    912
+                    948
                 </div>
                 
 
@@ -514,7 +514,7 @@
 <p>②计算公共模数 n<br> n = p * q  </p>
 <p>③欧拉函数φ(n)<br>φ(n) = （p-1）*（q-1） </p>
 <p>④公钥e<br>1 &lt; e &lt; φ(n)  </p>
-<p>⑤私钥d<br>(d * e) mod φ(n) = 1<br>可用RSA-Tool2 by tE工具根据p,q,e解出(使用工具时e要进行<a target="_blank" rel="noopener" href="https://tool.oschina.net/hexconvert">10进制到16进制的转化</a>)  </p>
+<p>⑤私钥d<br>(d * e) mod φ(n) = 1<br>d * e = 1 mod ((p-1) * (q-1))<br>可用RSA-Tool2 by tE工具根据p,q,e解出(使用工具时e要进行<a target="_blank" rel="noopener" href="https://tool.oschina.net/hexconvert">10进制到16进制的转化</a>)  </p>
 <p>⑥加密：密文c<br>c = (m^e) mod n  </p>
 <p>⑦解密：明文m<br>m = (c^d) mod n  </p>
 <p> 若题目说了格式为flag{}则直接上交<br>若未说，则转换成字符串的脚本如下：<br>import gmpy2<br>import binascii<br>e =<br>p =<br>q =<br>c =<br>n = p*q<br>phi = (p-1) * (q-1)<br>d = gmpy2.invert(e,phi)<br>m = gmpy2.powmod(c,d,n)<br>print(binascii.unhexlify(hex(m)[2:]))  </p>
@@ -523,11 +523,12 @@
 <p>③计算mp,mq,I<br>mp = (c^dp) mod p<br>mq = (c^dq) mod q<br>I = gmpy2.invert(q,p)<br>④ 明文m<br>m = (((mp-mq)*I)%p)q + mq</p>
 <h3 id="5-已知e-n1-n2-c1-c2"><a href="#5-已知e-n1-n2-c1-c2" class="headerlink" title="5 已知e,n1,n2,c1,c2"></a>5 <em>已知e,n1,n2,c1,c2</em></h3><p>①求出n1和n2的最大公约数p<br> p = gmpy2.gcd(n1,n2)<br>②计算q<br> q = n1//p (不必考虑q1,q2的情况，最后解出的字符串都一样)<br>③计算phi,d,m<br> phi = （p-1）*（q-1）<br> d = gmpy2.invert(e,phi)<br> m = gmpy2.powmod(c1,d,n1)<br>④代码<br>import gmpy2<br>import binascii<br>e =<br>n1 =<br>c1 =<br>n2 =<br>c2 =<br>p = gmpy2.gcd(n1,n2)<br>q = n1 // p<br>phi = (p-1) * (q-1)<br>d = gmpy2.invert(e,phi)<br>m = gmpy2.powmod(c1,d,n1)<br>print(binascii.unhexlify(hex(m)[2:]))  </p>
 <h3 id="6-已知n-e1-e2-c1-c2-共模攻击"><a href="#6-已知n-e1-e2-c1-c2-共模攻击" class="headerlink" title="6 已知n,e1,e2,c1,c2 共模攻击"></a>6 <em>已知n,e1,e2,c1,c2 共模攻击</em></h3><p>直接给代码了：<br>import gmpy2<br>import binascii<br>n =<br>e1 =<br>c1 =<br>e2 =<br>c2 =<br>s = gmpy2.gcdext(e1,e2)<br>m1 = gmpy2.powmod(c1,s[1],n)<br>m2 = gmpy2.powmod(c2,s[2],n)<br>m = (m1*m2)%n<br>print(binascii.unhexlify(hex(m)[2:]))  </p>
-<h3 id="7-低加密指数e攻击（e相对n-来说很小）"><a href="#7-低加密指数e攻击（e相对n-来说很小）" class="headerlink" title="7 低加密指数e攻击（e相对n,来说很小）"></a>7 <em>低加密指数e攻击（e相对n,来说很小）</em></h3><p>常用于e = 3 的情况<br>①m^3 &lt; n<br> c = m^3<br>②m^3 &gt; n<br> c = (m^3) - i * n<br> 即找到i,使得c+i * n可开三次方<br> 代码：<br>import gmpy2<br>import binascii<br>e =<br>n =<br>c =<br>i = 0<br>while True:<br>if gmpy2.iroot((c+i<em>n),3)[1] == True:<br> m = gmpy2.iroot((c+i</em>n),3)[0]<br> break<br> i += 1<br>print(binascii.unhexlify(hex(m)[2:]))  </p>
+<h3 id="7-低加密指数e攻击（e相对n-来说很小）"><a href="#7-低加密指数e攻击（e相对n-来说很小）" class="headerlink" title="7 低加密指数e攻击（e相对n,来说很小）"></a>7 <em>低加密指数e攻击（e相对n,来说很小）</em></h3><p>常用于e = 3 的情况<br>①m^3 &lt; n<br> c = m^3<br>②m^3 &gt; n<br> c = (m^3) - i * n<br> 即找到i,使得c+i * n可开三次方<br> 代码(记得缩进)：<br>import gmpy2<br>import binascii<br>e =<br>n =<br>c =<br>i = 0<br>while True:<br>if gmpy2.iroot((c+i * n),3)[1] == True:<br> m = gmpy2.iroot((c+i * n),3)[0]<br> break<br> i += 1<br>print(binascii.unhexlify(hex(m)[2:]))  </p>
 <h3 id="8-低解密指数攻击（e很大）"><a href="#8-低解密指数攻击（e很大）" class="headerlink" title="8 低解密指数攻击（e很大）"></a>8 <em>低解密指数攻击（e很大）</em></h3><p>用<a target="_blank" rel="noopener" href="https://codechina.csdn.net/mirrors/pablocelayes/rsa-wiener-attack?utm_source=csdn_github_accelerator">d破解脚本</a>后再在文件夹中新建py文件<br>代码：<br>import gmpy2<br>import binascii<br>import RSAwienerHacker<br>e =<br>n =<br>c =<br>d = RSAwienerHacker.hack_RSA(e,n)<br>m = gmpy2.powmod(c,d,n)<br>print(binascii.unhexlify(hex(m)[2:]))  </p>
 <h3 id="9-p-q相差极大或极小"><a href="#9-p-q相差极大或极小" class="headerlink" title="9 p,q相差极大或极小"></a>9 <em>p,q相差极大或极小</em></h3><p>使用yafu.exe  分解n<br>命令为 factor（n）  结果在factor.log中查看</p>
 <h3 id="10-低加密指数广播攻击"><a href="#10-低加密指数广播攻击" class="headerlink" title="10 低加密指数广播攻击"></a>10 <em>低加密指数广播攻击</em></h3><p>当e比较小，且使用了相同的e给若干个接收者发送相同的信息，有以下等式成立：<br>c1 = pow(m, e, n1)<br>c2 = pow(m, e, n2)<br>c3 = pow(m, e, n3)<br>对上述等式运用中国剩余定理，在e=3时，可以得到：<br>c _ x = pow(m, 3, n1 * n2 * n3)<br>通过对 c_x进行三次开方可以得到明文  </p>
-<h3 id="11-e-1或e-2时"><a href="#11-e-1或e-2时" class="headerlink" title="11 e=1或e=2时"></a>11 <em>e=1或e=2时</em></h3><p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/huanghelouzi/article/details/82974741">CTF中RSA常用攻击方法真题及脚本汇总</a></p>
+<h3 id="11-buuctf做题记录RSA2-dp泄露"><a href="#11-buuctf做题记录RSA2-dp泄露" class="headerlink" title="11 buuctf做题记录RSA2(dp泄露)"></a>11 <em>buuctf做题记录RSA2(dp泄露)</em></h3><p>题目：  已知e,n,dp,c<br>解：<br>我还不会</p>
+<h3 id="12-e-1或e-2时"><a href="#12-e-1或e-2时" class="headerlink" title="12 e=1或e=2时"></a>12 <em>e=1或e=2时</em></h3><p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/huanghelouzi/article/details/82974741">CTF中RSA常用攻击方法真题及脚本汇总</a></p>
 
                 
             </div>
