@@ -478,14 +478,14 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-02-05
+                    2021-02-09
                 </div>
                 
 
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>文章字数:&nbsp;&nbsp;
-                    977
+                    1k
                 </div>
                 
 
@@ -604,7 +604,10 @@ c3 = pow(m, e, n3)</font></pre>
 <p>对上述等式运用中国剩余定理，在e=3时，可以得到：<br><code>c _ x = pow(m, 3, n1 * n2 * n3)</code><br>通过对 c_x进行三次开方可以得到明文  </p>
 <h3 id="11-buuctf做题记录RSA2-dp泄露"><a href="#11-buuctf做题记录RSA2-dp泄露" class="headerlink" title="11 buuctf做题记录RSA2(dp泄露)"></a>11 <em>buuctf做题记录RSA2(dp泄露)</em></h3><p>题目：  已知e,n,dp,c<br>解：<br>我还不会</p>
 <h3 id="12-e-1或e-2时"><a href="#12-e-1或e-2时" class="headerlink" title="12 e=1或e=2时"></a>12 <em>e=1或e=2时</em></h3><p>参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/huanghelouzi/article/details/82974741">CTF中RSA常用攻击方法真题及脚本汇总</a></p>
-<h3 id="13-还在补充"><a href="#13-还在补充" class="headerlink" title="13 还在补充"></a>13 <em>还在补充</em></h3>
+<h3 id="13-e-为偶数-与phi不互素"><a href="#13-e-为偶数-与phi不互素" class="headerlink" title="13 e(为偶数)与phi不互素"></a>13 <em>e(为偶数)与phi不互素</em></h3><p>①选取e’=e/gcd(e,phi) (gcd指的是最大公因子)</p>
+<p>②加密指数选择d=invert(e’,phi)</p>
+<p>③解密过程可写为c^d=m^gcd(e,phi)mod(n) </p>
+<h3 id="14-还在补充"><a href="#14-还在补充" class="headerlink" title="14 还在补充"></a>14 <em>还在补充</em></h3>
                 
             </div>
             <hr/>
@@ -1150,7 +1153,7 @@ c3 = pow(m, e, n3)</font></pre>
             <br>
             
             &nbsp;<i class="fas fa-chart-area"></i>&nbsp;站点总字数:&nbsp;<span
-                class="white-color">1.1k</span>&nbsp;字
+                class="white-color">1.2k</span>&nbsp;字
             
             
             
